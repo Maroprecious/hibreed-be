@@ -14,9 +14,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AtStrategy, RtStrategy } from './strategies';
 import { APP_GUARD } from '@nestjs/core';
 import { AtGuard } from './guards';
+import { CourseModule } from './core/courses/course.module';
+import { CloudinaryModule } from './common/cloudinary/cloudinary.module';
 
 
-const modules = [AuthenticationModule, AdminModule, NotificationModule]
+const modules = [AuthenticationModule, AdminModule, NotificationModule, CourseModule, CloudinaryModule]
 
 @Module({
   imports: [
