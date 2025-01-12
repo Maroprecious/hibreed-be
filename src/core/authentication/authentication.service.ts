@@ -217,13 +217,14 @@ export class AuthenticationService {
 
     public async login(payload: LoginDto) {
         const user = await this.adminService.getAdmin({ email: payload.email });
-        if (!user.verified) {
-            await this.sendVerification(user)
-            throw new BadRequestException(`Account not verified. New activation link sent to email`);
-        }
+        
         const isPasswordMatched = await bcrypt.compare(payload.password, user.password);
         if (!isPasswordMatched) throw new BadRequestException('Password or email is invalid');
 
+        if (!user.verified) {
+            await this.resendVerification(user.email)
+            throw new BadRequestException(`Account not verified. New activation link sent to email`);
+        }
         const { accessToken, refreshToken } = await this.getToken({
             _id: user._id,
             email: user.email,

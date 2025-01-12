@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { BaseSchema } from "src/database/base.schema";
 import { Schema as MSchema } from 'mongoose';
+import { ModuleDto } from "../dto/course.dto";
 
 export enum course_categories {
     "master class" = "master classes",
@@ -24,8 +25,8 @@ export class Course extends BaseSchema {
     @Prop({ required: true, type: MSchema.Types.String })
     image: string;
 
-    @Prop([{ required: true, type: MSchema.Types.ObjectId, ref: "Module" }])
-    modules: Module[];
+    @Prop([{ required: true, type: MSchema.Types.Array}])
+    modules: ModuleDto[];
 
     @Prop({ required: true, type: MSchema.Types.String })
     duration: string;

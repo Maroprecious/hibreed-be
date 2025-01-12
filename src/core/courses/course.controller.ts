@@ -58,7 +58,7 @@ export class CourseController {
         @Body() body: EditCourseDto,
         @Param("id") id: string
     ) {
-        return await this.courseService.editCourse(id, body, image.buffer)
+        return await this.courseService.editCourse(id, body, image?.buffer)
     }
 
     @Get(":title")

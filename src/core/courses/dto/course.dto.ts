@@ -1,6 +1,6 @@
 import { Transform, Type } from "class-transformer";
 import { IsArray, IsNotEmpty, IsNumber, IsString, Matches, MinLength, ValidateNested, IsEnum, Min, ArrayMinSize, IsNumberString } from "class-validator";
-import { OmitType } from "@nestjs/mapped-types"
+import { OmitType, PartialType } from "@nestjs/mapped-types"
 import { course_categories } from "../schema/course.schema";
 
 
@@ -62,4 +62,4 @@ export class CourseDto {
     modules: ModuleDto[]
 }
 
-export class EditCourseDto extends OmitType(CourseDto, ["modules"]) { }
+export class EditCourseDto extends PartialType(CourseDto) { }

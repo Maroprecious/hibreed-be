@@ -19,10 +19,8 @@ export class CourseService {
         const course = await this.course.findOne({ title: payload.title })?.populate("modules")
         if (course) throw new BadRequestException(`Course with ${payload.title} already exists`)
         const image = await this.cloudinaryService.uploadImage(file)
-        const modules = await this.module.insertMany(payload.modules);
         await this.course.create({
             ...payload,
-            modules: modules.map((module) => module._id),
             image
         })
         return "Course created successfully"
@@ -53,12 +51,7 @@ export class CourseService {
 
     public async deleteCourse(title: string) {
         const course = await this.getOneCourse(title);
-        const modules = course.modules.map((module) => module._id);
-        await this.module.deleteMany({
-            _id: {
-                $in: modules
-            }
-        });
+
         await this.course.deleteOne({ title })
 
         return "Course deleted successfully"
