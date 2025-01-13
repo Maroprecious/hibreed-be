@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseFilePi
 import { CourseService } from "./course.service";
 import { CourseDto, EditCourseDto, ModuleDto } from "./dto/course.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { Public } from "src/decorators/public.decorator";
 
 @Controller("course")
 export class CourseController {
@@ -31,6 +32,7 @@ export class CourseController {
         return await this.courseService.createCourse(body, image.buffer)
     }
 
+    @Public()
     @Get()
     @HttpCode(HttpStatus.CREATED)
     async getAllCourses(
@@ -61,6 +63,7 @@ export class CourseController {
         return await this.courseService.editCourse(id, body, image?.buffer)
     }
 
+    @Public()
     @Get(":title")
     @HttpCode(HttpStatus.CREATED)
     async getOneCourse(

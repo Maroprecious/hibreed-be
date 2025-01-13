@@ -38,15 +38,19 @@ export class CourseService {
     }
 
     public async editCourse(id: string, payload: EditCourseDto, file?: Buffer) {
-        const course = await this.course.findById(id);
-        if (!course) throw new BadRequestException("Course not found")
-        const data: any = { ...payload };
-        if (file) {
-            const image = await this.cloudinaryService.uploadImage(file)
-            data.image = image
+        try {
+            const course = await this.course.findById(id);
+            if (!course) throw new BadRequestException("Course not found")
+            const data: any = { ...payload };
+            if (file) {
+                const image = await this.cloudinaryService.uploadImage(file)
+                data.image = image
+            }
+            await this.course.updateOne({ _id: id }, data);
+            return "Course updated successfully"
+        } catch (error) {
+            throw new BadRequestException(error)
         }
-        await this.course.updateOne({ _id: id }, data);
-        return "Course updated successfully"
     }
 
     public async deleteCourse(title: string) {

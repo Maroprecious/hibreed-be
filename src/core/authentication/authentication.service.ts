@@ -164,18 +164,28 @@ export class AuthenticationService {
     public async resetPassword(email: string) {
         const user = await this.adminService.getAdmin({ email });
         if (user) {
+            const hasActiveOtp = await this.otpModel.findOne({ admin: user._id, type: otp_type.RESET_PASSWORD });
             const otp = get_otp()
             const { accessToken } = await this.getToken({
                 _id: user._id,
                 email: user.email,
                 exp: "10m"
             })
-            await this.otpModel.create({
-                admin: user,
-                token: accessToken,
-                type: otp_type.RESET_PASSWORD,
-                otp
-            })
+            if (hasActiveOtp) {
+                await this.otpModel.updateOne({
+                    admin: user._id
+                }, {
+                    token: accessToken,
+                    otp
+                })
+            } else {
+                await this.otpModel.create({
+                    admin: user,
+                    token: accessToken,
+                    type: otp_type.RESET_PASSWORD,
+                    otp
+                })
+            }
             await this.notificationService.sendEmail({
                 to: user.email,
                 template: "./user/reset-password",
