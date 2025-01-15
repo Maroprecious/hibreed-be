@@ -22,7 +22,6 @@ export class ModuleDto {
     @IsArray()
     @IsString({ each: true, message: 'Each description must be a string.' })
     @ArrayMinSize(1)
-    @ValidateNested({ each: true })
     descriptions: string
 }
 
