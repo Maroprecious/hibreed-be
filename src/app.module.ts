@@ -16,9 +16,19 @@ import { APP_GUARD } from '@nestjs/core';
 import { AtGuard } from './guards';
 import { CourseModule } from './core/courses/course.module';
 import { CloudinaryModule } from './common/cloudinary/cloudinary.module';
+import { BlogModule } from './core/blog/blog.module';
+import { WebinarsModule } from './core/webinars/webinars.module';
 
 
-const modules = [AuthenticationModule, AdminModule, NotificationModule, CourseModule, CloudinaryModule]
+const modules = [
+  AuthenticationModule,
+  AdminModule,
+  NotificationModule,
+  CourseModule,
+  CloudinaryModule,
+  BlogModule,
+  WebinarsModule
+]
 
 @Module({
   imports: [

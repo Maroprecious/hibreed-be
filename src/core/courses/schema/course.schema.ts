@@ -25,7 +25,7 @@ export class Course extends BaseSchema {
     @Prop({ required: true, type: MSchema.Types.String })
     image: string;
 
-    @Prop([{ required: true, type: MSchema.Types.Array}])
+    @Prop([{ required: true, type: MSchema.Types.Array }])
     modules: ModuleDto[];
 
     @Prop({ required: true, type: MSchema.Types.String })
@@ -39,6 +39,12 @@ export class Course extends BaseSchema {
 
     @Prop({ type: MSchema.Types.Number })
     course_fee: number;
+
+    @Prop({ type: MSchema.Types.String })
+    youtube_url: string;
+
+    @Prop([{ type: MSchema.Types.Array }])
+    addons: Array<Record<string, string>>;
 }
 
 @Schema()

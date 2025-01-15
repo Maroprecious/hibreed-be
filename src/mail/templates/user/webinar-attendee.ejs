@@ -1,0 +1,134 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" lang="en">
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+
+</head>
+<div style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0">Verify your email<div>
+    </div>
+</div>
+
+<body
+    style="background-color: rgb(255, 255, 255); font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'; margin: auto; padding-left: 0.5rem; padding-right: 0.5rem;">
+    <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation"
+        style="max-width:600px;border-width:1px;border-style:solid;border-color:rgb(234,234,234);border-radius:0.25rem;margin-top:40px;margin-bottom:40px;margin-left:auto;margin-right:auto;padding:20px">
+        <tbody>
+            <tr style="width:100%">
+                <td>
+                    <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation"
+                        style="width:100%;border-bottom-width:1px;border-bottom-color:rgb(234,234,234);height:60px;background-color:rgb(255,255,255)">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0"
+                                        role="presentation">
+                                        <tbody style="width:100%">
+                                            <tr style="width:100%">
+                                                <td data-id="__react-email-column"><img alt="logo" height="24"
+                                                        src="https://res.cloudinary.com/dquiwka6j/image/upload/v1736268743/oqyzayzxc89iefrkjng4.png"
+                                                        style="display:block;outline:none;border:none;text-decoration:none"
+                                                        width="136" /></td>
+                                                <td data-id="__react-email-column">
+                                                    <table align="right" width="100%" border="0" cellPadding="0"
+                                                        cellSpacing="0" role="presentation" style="width:70px">
+                                                        <tbody style="width:100%">
+                                                            <tr style="width:100%">
+                                                                <td data-id="__react-email-column">
+                                                                    <div
+                                                                        style="padding:0.25rem;width:22px;border-radius:9999px;background-color:#00033E">
+                                                                        <a href="https://www.facebook.com/hibreed.io">
+                                                                            <img alt="logo" height="20"
+                                                                                src="https://res.cloudinary.com/dquiwka6j/image/upload/v1733614044/m5agzbb8lsppbfykkc5i.png"
+                                                                                style="display:block;outline:none;border:none;text-decoration:none"
+                                                                                width="20" />
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                                <td align="center" data-id="__react-email-column">
+                                                                    <div
+                                                                        style="padding:0.25rem;width:22px;border-radius:9999px;background-color:#00033E">
+                                                                        <a href="https://www.instagram.com/hibreed.io/">
+                                                                            <img alt="logo" height="20"
+                                                                                src="https://res.cloudinary.com/dquiwka6j/image/upload/v1733614043/wnawnljootbfvm6fqjz0.png"
+                                                                                style="display:block;outline:none;border:none;text-decoration:none"
+                                                                                width="20" />
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr style="width:100%;border:none;border-top:1px solid #eaeaea" />
+                    <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation"
+                        style="margin-top:32px">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p
+                                        style="font-size:35px;line-height:40px;margin:16px 0;font-weight:600;color:rgb(0,0,0)">
+                                        Your seat has been reserved</p>
+                                    <p
+                                        style="font-size:23px;line-height:24px;margin:16px 0;font-weight:600;color:rgb(0,0,0);margin-top:4rem">
+                                        Hi <%= name %> 😊</p>
+                                    <p
+                                        style="font-size:16px;line-height:25px;margin:16px 0;font-weight:300;color:rgb(106, 106, 106)">
+                                        I hope you&#x27;re having a great day!<!-- --> </p>
+                                    <p
+                                        style="font-size:16px;line-height:25px;margin:16px 0;font-weight:300;color:rgb(106, 106, 106);">
+                                        Congratulations on successfully registering for our webinar! We’re excited to
+                                        connect with you. Below are the details of the upcoming session:
+                                    </p>
+                                    <p
+                                        style="font-size:16px;line-height:25px;margin:16px 0;font-weight:300;color:rgb(106, 106, 106);">
+                                       <% for( let index = 0; index < details.length; index++ ) { %>
+                                        <%= details[index].key %>: <strong><%= details[index].value %></strong> <br />
+                                       <% } %>
+                                    </p>
+                                    <p
+                                        style="font-size:16px;line-height:25px;margin:16px 0;font-weight:300;color:rgb(106, 106, 106);">
+                                        We’ve assembled a panel of exceptional speakers to share invaluable insights.
+                                        Find their details below:
+                                    </p>
+                                    <% for( let index=0; index < speakers.length; index++ ) { %>
+                                        <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0"
+                                            role="presentation">
+                                            <tbody style="width:100%">
+                                                <tr style="width:100%">
+                                                    <td align="center" data-id="__react-email-column">
+                                                        <img src="<%= speakers[index].image %>" style="width: 80px; height: 80px; border-radius: 100px;" />
+                                                        <h3 style="text-align: center;"><%= speakers[index].name %></h3>
+                                                        <p style="text-align: center;"><%= speakers[index].bio %></p>
+                                                        </span><span><!--[if mso]><i style="letter-spacing: 40px;mso-font-width:-100%" hidden>&nbsp;</i><![endif]--></span></a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <% } %>
+                                            <p
+                                                style="font-size:16px;line-height:25px;margin:16px 0;font-weight:300;color:rgb(106, 106, 106)">
+                                                Thanks, as see you soon. </p>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p
+        style="font-size:0.75rem;line-height:1rem;margin:16px 0;font-weight:300;color:rgb(106, 106, 106);padding-bottom:3rem;text-align:center">
+        © 2024 Hibreed. All rights reserved <br /></p>
+</body>
+
+</html>

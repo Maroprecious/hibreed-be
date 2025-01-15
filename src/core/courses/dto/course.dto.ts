@@ -1,24 +1,45 @@
 import { Transform, Type } from "class-transformer";
-import { IsArray, IsNotEmpty, IsNumber, IsString, Matches, MinLength, ValidateNested, IsEnum, Min, ArrayMinSize, IsNumberString } from "class-validator";
+import { IsArray, IsNotEmpty, IsNumber, IsString, Matches, MinLength, ValidateNested, IsEnum, Min, ArrayMinSize, IsNumberString, IsOptional } from "class-validator";
 import { OmitType, PartialType } from "@nestjs/mapped-types"
 import { course_categories } from "../schema/course.schema";
 
+class CourseAddons {
+    @IsString()
+    @IsNotEmpty()
+    name: string;
+
+    @IsString()
+    @IsNotEmpty()
+    value: string;
+}
 
 export class ModuleDto {
     @IsString()
     @IsNotEmpty()
     title: string
 
-    @IsString()
     @IsNotEmpty()
-    @MinLength(10)
-    description: string
+    @IsArray()
+    @IsString({ each: true, message: 'Each description must be a string.' })
+    @ArrayMinSize(1)
+    @ValidateNested({ each: true })
+    descriptions: string
 }
 
 export class CourseDto {
     @IsString()
     @IsNotEmpty()
     title: string
+
+    @IsString()
+    @IsOptional()
+    youtube_url: string
+
+    @IsOptional()
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => CourseAddons)
+    addons: CourseAddons[]
 
     @IsString()
     @IsNotEmpty()
@@ -61,5 +82,7 @@ export class CourseDto {
     @ArrayMinSize(1)
     modules: ModuleDto[]
 }
+
+
 
 export class EditCourseDto extends PartialType(CourseDto) { }
