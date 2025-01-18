@@ -78,6 +78,7 @@ export class BlogController {
         return await this.blogService.createCategory(body)
     }
 
+    @Public()
     @Get("category")
     @HttpCode(HttpStatus.OK)
     async getAllCategories() {
