@@ -3,6 +3,7 @@ import { BlogDto, CategoryDto, EditBlogDto, ParamsIDDto, ParamsNameDto, ParamsTi
 import { BlogService } from "./blog.service";
 import { GetCurrentUserId } from "src/decorators/get-current-user-id.decorator";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { Public } from "src/decorators/public.decorator";
 
 @Controller("blog")
 export class BlogController {
@@ -31,6 +32,7 @@ export class BlogController {
         return await this.blogService.createBlog(body, user, featured_image.buffer)
     }
 
+    @Public()
     @Get()
     @HttpCode(HttpStatus.OK)
     async getAllBlogs() {
@@ -82,6 +84,7 @@ export class BlogController {
         return await this.blogService.getAllCategories()
     }
 
+    @Public()
     @Get(":title")
     @HttpCode(HttpStatus.OK)
     async getOneBlog(

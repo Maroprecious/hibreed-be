@@ -4,6 +4,7 @@ import { AnyFilesInterceptor, FileFieldsInterceptor, FileInterceptor } from "@ne
 import { FileNameRegexInterceptor } from "src/interceptors/file.interceptor";
 import { WebinarService } from "./webinars.service";
 import { ParamsIDDto, ParamsTitleDto } from "../blog/dto/blog.dto";
+import { Public } from "src/decorators/public.decorator";
 
 @Controller("webinar")
 export class WebinarController {
@@ -37,12 +38,7 @@ export class WebinarController {
         }
     }
 
-    @Get()
-    @HttpCode(HttpStatus.OK)
-    async getAllWebinars() {
-        return await this.webinarService.getAllWebinars()
-    }
-
+    @Public()
     @Get(":title")
     @HttpCode(HttpStatus.OK)
     async getOneWebinar(
@@ -51,6 +47,7 @@ export class WebinarController {
         return await this.webinarService.getOneWebinar(title)
     }
 
+    @Public()
     @Get()
     @HttpCode(HttpStatus.OK)
     async getAll(
