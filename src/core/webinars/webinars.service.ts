@@ -18,27 +18,31 @@ export class WebinarService {
     ) { }
 
     public async createWebinars(payload: WebinarDto & { feature_image: Buffer },) {
-        const webinar = await this.webinarModel.findOne({ title: payload.title });
-        if (webinar) throw new BadRequestException(`Webinar with title - ${payload.title} already exist`);
+        try {
+            const webinar = await this.webinarModel.findOne({ title: payload.title });
+            if (webinar) throw new BadRequestException(`Webinar with title - ${payload.title} already exist`);
 
-        const speakers = await Promise.all(
-            payload.speakers.map(async (speaker) => {
-                const speaker_image = await this.cloudinaryService.uploadImage(speaker.image);
-                return {
-                    ...speaker,
-                    image: speaker_image
-                }
+            const speakers = await Promise.all(
+                payload.speakers.map(async (speaker) => {
+                    const speaker_image = await this.cloudinaryService.uploadImage(speaker.image);
+                    return {
+                        ...speaker,
+                        image: speaker_image
+                    }
+                })
+            )
+            const feature_image = await this.cloudinaryService.uploadImage(payload.feature_image)
+            delete payload.speakers;
+
+            await this.webinarModel.create({
+                ...payload,
+                speakers: speakers.flat(),
+                feature_image
             })
-        )
-        const feature_image = await this.cloudinaryService.uploadImage(payload.feature_image)
-        delete payload.speakers;
-
-        await this.webinarModel.create({
-            ...payload,
-            speakers: speakers.flat(),
-            feature_image
-        })
-        return "Webinar created successfully"
+            return "Webinar created successfully"
+        } catch (error) {
+            throw new BadRequestException(error)
+        }
     }
 
     public async editWebinar(

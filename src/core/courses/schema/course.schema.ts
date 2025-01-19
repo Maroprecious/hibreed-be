@@ -43,7 +43,10 @@ export class Course extends BaseSchema {
     @Prop({ type: MSchema.Types.String })
     youtube_url: string;
 
-    @Prop([{ type: MSchema.Types.Array }])
+    @Prop({ type: MSchema.Types.String })
+    early_bird_offer: string;
+
+    @Prop({ type: MSchema.Types.Array })
     addons: Array<Record<string, string>>;
 }
 

@@ -32,6 +32,10 @@ export class CourseDto {
 
     @IsString()
     @IsOptional()
+    early_bird_offer: string
+
+    @IsString()
+    @IsOptional()
     youtube_url: string
 
     @IsOptional()
@@ -57,9 +61,6 @@ export class CourseDto {
 
     @IsString()
     @IsNotEmpty()
-    @Matches(/^\d+\s(weeks|days|months|years)$/, {
-        message: 'Duration must be in the format "{number} weeks | days | months | years"',
-    })
     duration: string
 
     @IsNotEmpty()
