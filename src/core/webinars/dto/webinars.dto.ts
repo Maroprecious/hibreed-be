@@ -87,9 +87,6 @@ export class WebinarDto {
 
     @IsString()
     @IsNotEmpty()
-    @Matches(/^(0?[1-9]|1[0-2]):(AM|PM)$/, {
-      message: 'Time must be in the format {number}:{AM or PM}, e.g., 4:PM or 12:AM.',
-    })
     time: string;
 
     @IsString()
