@@ -34,8 +34,8 @@ export class Course extends BaseSchema {
     @Prop({ required: true, type: MSchema.Types.String })
     duration: string;
 
-    @Prop({ type: MSchema.Types.Number })
-    hours_per_week: number;
+    @Prop({ type: MSchema.Types.String })
+    hours_per_week: string;
 
     @Prop({ type: MSchema.Types.Number })
     number_of_modules: number;
