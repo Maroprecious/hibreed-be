@@ -18,6 +18,7 @@ import { CourseModule } from './core/courses/course.module';
 import { CloudinaryModule } from './common/cloudinary/cloudinary.module';
 import { BlogModule } from './core/blog/blog.module';
 import { WebinarsModule } from './core/webinars/webinars.module';
+import { JobsModule } from './core/jobs/jobs.module';
 
 
 const modules = [
@@ -27,7 +28,8 @@ const modules = [
   CourseModule,
   CloudinaryModule,
   BlogModule,
-  WebinarsModule
+  WebinarsModule,
+  JobsModule
 ]
 
 @Module({
