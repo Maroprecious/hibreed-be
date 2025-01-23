@@ -1,7 +1,7 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseFilePipeBuilder, Patch, Post, Put, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { BadRequestException, Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseFilePipeBuilder, Patch, Post, Put, UploadedFile, UploadedFiles, UseInterceptors } from "@nestjs/common";
 import { CourseService } from "./course.service";
 import { CourseDto, EditCourseDto, ModuleDto } from "./dto/course.dto";
-import { FileInterceptor } from "@nestjs/platform-express";
+import { AnyFilesInterceptor, FileFieldsInterceptor, FileInterceptor } from "@nestjs/platform-express";
 import { Public } from "src/decorators/public.decorator";
 
 @Controller("course")
@@ -11,25 +11,42 @@ export class CourseController {
     ) { }
 
     @Post()
-    @UseInterceptors(FileInterceptor('image'))
+    @UseInterceptors(AnyFilesInterceptor())
     @HttpCode(HttpStatus.CREATED)
     async courseCreated(
-        @UploadedFile(
-            new ParseFilePipeBuilder()
-                .addFileTypeValidator({
-                    fileType: /jpeg|jpg|png/,
-                })
-                .addMaxSizeValidator({
-                    maxSize: 5 * 1024 * 1024
-                })
-                .build({
-                    errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-                    fileIsRequired: true
-                }),
-        ) image: Express.Multer.File,
+        @UploadedFiles() files: Array<Express.Multer.File>,
         @Body() body: CourseDto
     ) {
-        return await this.courseService.createCourse(body, image.buffer)
+        const image = files.find((file) => file.fieldname === "image");
+        if (!image) {
+            throw new BadRequestException('Image file is required');
+        }
+        const imageFile = image;
+        if (!/jpeg|jpg|png/.test(imageFile.mimetype)) {
+            throw new BadRequestException('Invalid image file type. Only JPEG, JPG, and PNG are allowed.');
+        }
+        if (imageFile.size > 5 * 1024 * 1024) {
+            throw new BadRequestException('Image file size exceeds the 5MB limit.');
+        }
+        const certificate = files.find((file) => file.fieldname === "certificate");
+
+        if (certificate) {
+            const certificateFile = certificate;
+            if (!/jpeg|jpg|png/.test(certificateFile.mimetype)) {
+                throw new BadRequestException('Invalid certificate file type. Only JPEG, JPG, and PNG are allowed.');
+            }
+            if (certificateFile.size > 5 * 1024 * 1024) {
+                throw new BadRequestException('Certificate file size exceeds the 5MB limit.');
+            }
+        }
+        const tutorImages = files.filter((file) => file.fieldname.includes("tutor"))
+
+        return await this.courseService.createCourse(
+            body,
+            image.buffer,
+            certificate?.buffer,
+            tutorImages
+        )
     }
 
     @Public()

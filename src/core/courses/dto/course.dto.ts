@@ -1,5 +1,5 @@
 import { Transform, Type } from "class-transformer";
-import { IsArray, IsNotEmpty, IsNumber, IsString, Matches, MinLength, ValidateNested, IsEnum, Min, ArrayMinSize, IsNumberString, IsOptional } from "class-validator";
+import { IsArray, IsNotEmpty, IsNumber, IsString, Matches, MinLength, ValidateNested, IsEnum, Min, ArrayMinSize, IsNumberString, IsOptional, ArrayMaxSize } from "class-validator";
 import { OmitType, PartialType } from "@nestjs/mapped-types"
 import { course_categories } from "../schema/course.schema";
 
@@ -25,6 +25,24 @@ export class ModuleDto {
     descriptions: string
 }
 
+export class TutorDto {
+    @IsString()
+    @IsOptional()
+    linkedin_url: string
+
+    @IsString()
+    @IsOptional()
+    about: string
+
+    @IsString()
+    @IsOptional()
+    image: string
+
+    @IsString()
+    @IsNotEmpty()
+    name: string
+}
+
 export class CourseDto {
     @IsString()
     @IsNotEmpty()
@@ -43,6 +61,14 @@ export class CourseDto {
     @ValidateNested({ each: true })
     @Type(() => CourseAddons)
     addons: CourseAddons[]
+
+    @IsOptional()
+    @IsArray()
+    @ArrayMinSize(1)
+    @ArrayMaxSize(3)
+    @ValidateNested({ each: true })
+    @Type(() => TutorDto)
+    tutors?: TutorDto[]
 
     @IsString()
     @IsNotEmpty()
@@ -64,8 +90,7 @@ export class CourseDto {
     duration: string
 
     @IsNotEmpty()
-    @Transform(({ value }) => Number(value))
-    @IsNumber()
+    @IsString()
     hours_per_week: string
 
     @IsNotEmpty()

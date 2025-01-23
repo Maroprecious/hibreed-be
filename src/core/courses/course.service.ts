@@ -15,12 +15,30 @@ export class CourseService {
         private cloudinaryService: CloudinaryService
     ) { }
 
-    public async createCourse(payload: CourseDto, file: Buffer) {
+    public async createCourse(
+        payload: CourseDto,
+        file: Buffer,
+        certificateBuffer?: Buffer,
+        tutorImages?: Express.Multer.File[]
+    ) {
         const course = await this.course.findOne({ title: payload.title })?.populate("modules")
         if (course) throw new BadRequestException(`Course with ${payload.title} already exists`)
         const image = await this.cloudinaryService.uploadImage(file)
+        const certificate = certificateBuffer
+            ? await this.cloudinaryService.uploadImage(certificateBuffer)
+            : "";
+
+        if (tutorImages?.length && payload.tutors?.length) {
+            const uploadTutorImages = tutorImages.map(async (image, index) => {
+                if (payload.tutors[index]) {
+                    payload.tutors[index].image = await this.cloudinaryService.uploadImage(image.buffer);
+                }
+            });
+            await Promise.all(uploadTutorImages);
+        }
         await this.course.create({
             ...payload,
+            certificate,
             image
         })
         return "Course created successfully"
