@@ -16,6 +16,7 @@ import {
 import { JobsService } from "./jobs.service";
 import { JobsDto } from "./dto/jobs.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { Public } from "src/decorators/public.decorator";
 
 @Controller("jobs")
 export class JobsController {
@@ -36,11 +37,13 @@ export class JobsController {
         return await this.jobsService.createJob(payload, file.buffer);
     }
 
+    @Public()
     @Get()
     async getAllJobs() {
         return await this.jobsService.getAllJobs();
     }
 
+    @Public()
     @Get(":title")
     async getJobById(@Param("title") title: string) {
         return await this.jobsService.getJobById(title);

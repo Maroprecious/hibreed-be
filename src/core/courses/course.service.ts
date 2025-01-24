@@ -55,7 +55,13 @@ export class CourseService {
         return course
     }
 
-    public async editCourse(id: string, payload: EditCourseDto, file?: Buffer) {
+    public async editCourse(
+        id: string,
+        payload: EditCourseDto,
+        file?: Buffer,
+        certificateBuffer?: Buffer,
+        tutorImages?: Express.Multer.File[]
+    ) {
         try {
             const course = await this.course.findById(id);
             if (!course) throw new BadRequestException("Course not found")
@@ -63,6 +69,18 @@ export class CourseService {
             if (file) {
                 const image = await this.cloudinaryService.uploadImage(file)
                 data.image = image
+            }
+            if (certificateBuffer) {
+                const certificate = await this.cloudinaryService.uploadImage(certificateBuffer);
+                data.certificate = certificate
+            }
+            if (tutorImages?.length && data.tutors?.length) {
+                const uploadTutorImages = tutorImages.map(async (image, index) => {
+                    if (data.tutors[index]) {
+                        data.tutors[index].image = await this.cloudinaryService.uploadImage(image.buffer);
+                    }
+                });
+                await Promise.all(uploadTutorImages);
             }
             await this.course.updateOne({ _id: id }, data);
             return "Course updated successfully"
