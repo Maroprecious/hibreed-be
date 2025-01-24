@@ -41,6 +41,10 @@ export class TutorDto {
     @IsString()
     @IsNotEmpty()
     name: string
+
+    @IsString()
+    @IsOptional()
+    location: string
 }
 
 export class CourseDto {
