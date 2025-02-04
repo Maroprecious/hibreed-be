@@ -25,7 +25,7 @@ export class AtGuard extends AuthGuard('jwt') {
     }
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
     if (roles) {
-      const hasAccess = roles.some(role => user?.role.includes(role));
+      const hasAccess = roles.includes(user?.role) 
       if (!hasAccess) {
         throw new UnauthorizedException('The user does not have valid roles.');
       }

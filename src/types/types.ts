@@ -3,7 +3,7 @@ import { ISendMailOptions } from "@nestjs-modules/mailer";
 export type JwtPayload = {
     email: String;
     _id: string;
-    role?: string[];
+    role?: string;
 } & Record<string, any>
 
 export type JwtPayloadWithRt = JwtPayload & { refreshToken: string };

@@ -3,6 +3,8 @@ import { CourseService } from "./course.service";
 import { CourseDto, EditCourseDto, ModuleDto } from "./dto/course.dto";
 import { AnyFilesInterceptor, FileFieldsInterceptor, FileInterceptor } from "@nestjs/platform-express";
 import { Public } from "src/decorators/public.decorator";
+import { Roles } from "src/decorators/roles.decorator";
+import { user_type } from "../admin/schema/admin.schema";
 
 @Controller("course")
 export class CourseController {
@@ -10,6 +12,7 @@ export class CourseController {
         private courseService: CourseService
     ) { }
 
+    @Roles(user_type.ADMIN)
     @Post()
     @UseInterceptors(AnyFilesInterceptor())
     @HttpCode(HttpStatus.CREATED)
@@ -57,6 +60,7 @@ export class CourseController {
         return await this.courseService.getAllCourse()
     }
 
+    @Roles(user_type.ADMIN)
     @Patch(":id")
     @UseInterceptors(AnyFilesInterceptor())
     @HttpCode(HttpStatus.CREATED)
@@ -101,6 +105,7 @@ export class CourseController {
         return await this.courseService.getOneCourse(title)
     }
 
+    @Roles(user_type.ADMIN)
     @Delete(":title")
     @HttpCode(HttpStatus.CREATED)
     async deleteCourse(

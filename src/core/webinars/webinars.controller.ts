@@ -5,6 +5,8 @@ import { FileNameRegexInterceptor } from "src/interceptors/file.interceptor";
 import { WebinarService } from "./webinars.service";
 import { ParamsIDDto, ParamsTitleDto } from "../blog/dto/blog.dto";
 import { Public } from "src/decorators/public.decorator";
+import { Roles } from "src/decorators/roles.decorator";
+import { user_type } from "../admin/schema/admin.schema";
 
 @Controller("webinar")
 export class WebinarController {
@@ -12,6 +14,7 @@ export class WebinarController {
         private webinarService: WebinarService
     ) { }
 
+    @Roles(user_type.ADMIN)
     @Post()
     @HttpCode(HttpStatus.CREATED)
     @UseInterceptors(AnyFilesInterceptor())

@@ -4,6 +4,8 @@ import { BlogService } from "./blog.service";
 import { GetCurrentUserId } from "src/decorators/get-current-user-id.decorator";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Public } from "src/decorators/public.decorator";
+import { Roles } from "src/decorators/roles.decorator";
+import { user_type } from "../admin/schema/admin.schema";
 
 @Controller("blog")
 export class BlogController {
@@ -11,6 +13,7 @@ export class BlogController {
         private blogService: BlogService
     ) { }
 
+    @Roles(user_type.ADMIN)
     @Post()
     @UseInterceptors(FileInterceptor('featured_image'))
     @HttpCode(HttpStatus.CREATED)
@@ -47,6 +50,7 @@ export class BlogController {
         return await this.blogService.deleteBlog(title)
     }
 
+    @Roles(user_type.ADMIN)
     @Patch(":id")
     @HttpCode(HttpStatus.OK)
     @UseInterceptors(FileInterceptor('featured_image'))
@@ -72,6 +76,7 @@ export class BlogController {
 
 
 
+    @Roles(user_type.ADMIN)
     @Post("category")
     @HttpCode(HttpStatus.CREATED)
     async createCategoty(@Body() body: CategoryDto) {
@@ -94,6 +99,7 @@ export class BlogController {
         return await this.blogService.getOneBlog(title)
     }
 
+    @Roles(user_type.ADMIN)
     @Delete(":title")
     @HttpCode(HttpStatus.OK)
     async deleteCategory(

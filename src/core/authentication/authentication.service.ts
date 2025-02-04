@@ -227,7 +227,7 @@ export class AuthenticationService {
 
     public async login(payload: LoginDto) {
         const user = await this.adminService.getAdmin({ email: payload.email });
-        
+
         const isPasswordMatched = await bcrypt.compare(payload.password, user.password);
         if (!isPasswordMatched) throw new BadRequestException('Password or email is invalid');
 
@@ -238,6 +238,7 @@ export class AuthenticationService {
         const { accessToken, refreshToken } = await this.getToken({
             _id: user._id,
             email: user.email,
+            role: user.role
         })
         return { accessToken, refreshToken }
     }

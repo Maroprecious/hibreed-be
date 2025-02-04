@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { IsEmail, IsEnum, IsNotEmpty, IsString } from "class-validator";
+import { user_type } from "../schema/admin.schema";
 
 export class CreasteAdminDto {
     @IsString()
@@ -21,6 +22,11 @@ export class CreasteAdminDto {
     @IsString()
     @IsNotEmpty()
     password: string
+
+    @IsString()
+    @IsNotEmpty()
+    @IsEnum(user_type)
+    role: string
 }
 
 export class UpdateAdminDto {
