@@ -2,13 +2,23 @@ import { BadRequestException, Injectable } from "@nestjs/common";
 import { Admin } from "./schema/admin.schema";
 import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
-import { CreasteAdminDto, UpdateAdminDto } from "./dto/admin.dto";
+import { CreasteAdminDto, HowItWorkssDto, TestimonialArrsDto, TestimonialsDto, UpdateAdminDto } from "./dto/admin.dto";
+import { LandingPage, Testimonials } from "./schema/landling-page.schema";
+import { CloudinaryService } from "src/common/cloudinary/cloudinary.service";
 
 @Injectable()
 export class AdminService {
     constructor(
         @InjectModel(Admin.name)
-        public adminModel: Model<Admin>
+        public adminModel: Model<Admin>,
+
+        @InjectModel(LandingPage.name)
+        public landingModel: Model<LandingPage>,
+
+        @InjectModel(Testimonials.name)
+        public testimonialsModel: Model<Testimonials>,
+
+        private cloudinaryService: CloudinaryService
     ) { }
 
     public async getAdmin(payload: Omit<Partial<Admin>, "password">) {
@@ -41,6 +51,58 @@ export class AdminService {
             throw new BadRequestException(error)
         }
     }
+
+    public async updateHero(hero_text: string, file: Express.Multer.File) {
+        const landing = await this.landingModel.find();
+        const body: any = { hero_text }
+        if (file) {
+            const hero_image = await this.cloudinaryService.uploadImage(file.buffer);
+            body.hero_image = hero_image
+        }
+        await this.landingModel.updateOne({ _id: landing[0]._id }, body);
+        return "Updated"
+    }
+
+
+    public async updateHowItWorks({ how_it_works }: HowItWorkssDto) {
+        const landing = await this.landingModel.find();
+        await this.landingModel.updateOne({ _id: landing[0]._id }, { how_it_works })
+        return "Updated"
+    }
+
+
+    public async updateTestimonial(payload: TestimonialArrsDto, files: Express.Multer.File[]) {
+        const landing = await this.landingModel.find()
+        const testimonials = await Promise.all(
+            payload.testimonials.map(async (entry, indx) => {
+                const image = await this.cloudinaryService.uploadImage(files[indx].buffer);
+                const testi = await this.testimonialsModel.create({
+                    ...entry,
+                    image,
+                });
+                return testi._id.toString();
+            })
+        );
+
+        await this.landingModel.updateOne(
+            { _id: landing[0]?._id },
+            {
+                $push: { testimonials: { $each: testimonials } }
+            }
+        );
+
+        return "Updated"
+    }
+
+    public async getAllLanding() {
+        const data = await this.landingModel.find().populate("testimonials")
+        return data[0]
+    }
+
+    public async landingSeed() {
+        return await this.landingModel.create({})
+    }
+
 
     public async deleteAdmin(userId: string) {
         try {
