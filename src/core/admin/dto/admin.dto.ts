@@ -124,7 +124,7 @@ export class TestimonialsDto {
 export class TestimonialArrsDto {
     @IsNotEmpty()
     @IsArray()
-    @ArrayMinSize(4)
+    @ArrayMinSize(3)
     @ValidateNested({ each: true })
     @Type(() => TestimonialsDto)
     testimonials: TestimonialsDto[]
