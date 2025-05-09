@@ -31,6 +31,9 @@ export class Testimonials extends BaseSchema {
 
     @Prop({ required: true, type: MSchema.Types.String })
     linkedInUrl: string;
+
+    @Prop({ required: true, type: MSchema.Types.String })
+    career: string;
 }
 
 export const LandingPageSchema = SchemaFactory.createForClass(LandingPage);

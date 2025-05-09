@@ -118,6 +118,10 @@ export class TestimonialsDto {
     @IsNotEmpty()
     @IsString()
     linkedInUrl: string
+
+    @IsNotEmpty()
+    @IsString()
+    career: string
 }
 
 
