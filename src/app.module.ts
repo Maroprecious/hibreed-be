@@ -49,12 +49,12 @@ const modules = [
     JwtModule.register({}),
     MailerModule.forRoot({
       transport: {
-        host: process.env.GMAIL_HOST,
-        port: process.env.GMAIL_PORT,
+        host: 'smtp.gmail.com',
+        port: 465,
         secure: true,
         auth: {
-          user: process.env.GMAIL_SENDER,
-          pass: process.env.GMAIL_APP_PASSWORD
+          user: 'ebeesgreen@gmail.com',
+          pass: 'xjlx ylxd iqjb wiqo'
         },
       },
       template: {
