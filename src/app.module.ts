@@ -54,7 +54,7 @@ const modules = [
         secure: true,
         auth: {
           user: 'ebeesgreen@gmail.com',
-          pass: 'xjlx ylxd iqjb wiqo'
+          pass: 'zcei enrd dscf dwum'
         },
       },
       template: {
