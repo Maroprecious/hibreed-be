@@ -132,3 +132,34 @@ export class TestimonialArrsDto {
     @Type(() => TestimonialsDto)
     testimonials: TestimonialsDto[]
 }
+
+
+class BodyDto {
+    @IsNotEmpty()
+    @IsString()
+    title: string;
+
+    @IsNotEmpty()
+    @IsArray()
+    @IsString({ each: true })
+    content: string[];
+}
+
+export class AboutUsDto {
+    @IsNotEmpty()
+    @IsString()
+    title: string;
+
+    @IsNotEmpty()
+    @IsString()
+    sub_title: string;
+}
+
+export class BodyDataDto {
+    @IsNotEmpty()
+    @IsArray()
+    // @ArrayMinSize(4)
+    @ValidateNested({ each: true })
+    @Type(() => BodyDto)
+    body: BodyDto[]
+}

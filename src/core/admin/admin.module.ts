@@ -5,6 +5,7 @@ import { AdminService } from "./admin.service";
 import { AdminController } from "./admin.controller";
 import { LandingPage, LandingPageSchema, Testimonials, TestimonialsSchema } from "./schema/landling-page.schema";
 import { CloudinaryService } from "src/common/cloudinary/cloudinary.service";
+import { AboutUs, AboutUsSchema, Body, BodySchema } from "./schema/about-us.schema";
 
 @Module({
     imports: [
@@ -20,6 +21,14 @@ import { CloudinaryService } from "src/common/cloudinary/cloudinary.service";
             {
                 name: Testimonials.name,
                 schema: TestimonialsSchema
+            },
+            {
+                name: AboutUs.name,
+                schema: AboutUsSchema
+            },
+            {
+                name: Body.name,
+                schema: BodySchema
             }
         ])],
     controllers: [AdminController],
